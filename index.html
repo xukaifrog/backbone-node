@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>backbonejs hellow world</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User manager</h1>
+        <hr />
+        <div class="page"></div>
+    </div>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script type="text/template" id="user-list-template">
+        <a href="#/new" class="btn btn-primary">New</a>
+        <hr />
+        <table class="table striped">
+            <thead>
+                <tr>
+                    <th>first name</th>
+                    <th>last name</th>
+                    <th>age</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(users, function(user){ %>
+                <tr>
+                <td><%= htmlEncode(user.get('firstname')) %> </td>
+                <td><%= htmlEncode(user.get('lastname')) %> </td>
+                <td><%= htmlEncode(user.get('age')) %> </td>
+                <td><a href="#/edit/<%= user.get('id') %>" class="btn">Edit</a></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </script>
+
+    <script>
+        function htmlEncode(value){
+            return $('<div/>').text(value).html();
+        };
+        $.fn.serializeObject = function() {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            })
+            return o;
+        }
+
+        $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+            options.url = 'http://127.0.0.1:3000' + options.url;
+        })
+
+        var Users = Backbone.Collection.extend({
+            url:'/users'
+        })
+
+        var UserListView = Backbone.View.extend({
+           el:'.page',
+           render:function(){
+               var users = new Users();
+               var that = this;
+               users.fetch({
+                   success:function(users){
+                       var template = _.template($('#user-list-template').html(), {users:users.models});
+                       that.$el.html(template);
+                   }
+               })
+           }
+        })
+
+        var userListView = new UserListView();
+
+        var Router = Backbone.Router.extend({
+            routes:{
+                "":'home'
+            }
+        })
+
+        var router = new Router();
+        router.on('route:home', function(){
+            userListView.render();
+        })
+
+        Backbone.history.start();
+    </script>
+</body>
+</html>
