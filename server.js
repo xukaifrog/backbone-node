@@ -30,6 +30,16 @@ var listUser = function(req, res) {
     })
 };
 
+var getUser = function(req, res){
+    var sql = 'select id, firstname, lastname, age from user where id=' + mysql.escape (res.params.id);
+    pool.query(sql, function(err, rows, fields){
+        if(err) throw err;
+        res.send(rows);
+    })
+
+}
+
 app.get('/users', listUser);
+app.get('/users/:id', getUser);
 
 app.listen(port);
