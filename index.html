@@ -44,12 +44,15 @@
         <form class='edit-user-form'>
             <legend>Edit user </legend>
             <label> First Name </label>
-            <input type='text' value='<% user.get('firstname') %>' name='firstName'>
+            <input type='text' value='<%= user.get('firstname') %>' name='firstname'>
             <label> Last Name </label>
-            <input name='lastName' type='text' value='<% user.get('lastname') %>'>
+            <input name='lastname' type='text' value='<%= user.get('lastname') %>'>
             <label> age </label>
-            <input type='text' name='age' value='<% user.get('age') %>'>
+            <input type='text' name='age' value='<%= user.get('age') %>'>
+
+            <hr />
             <input type='submit' class='btn-primary'>
+            <input type='hidden' name="id" value="<%= user.id %>">
         </form>
     </script>
 
@@ -75,7 +78,28 @@
 
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
             options.url = 'http://127.0.0.1:3000' + options.url;
-        })
+            options.crossDomain = {
+                crossDomain: true
+            };
+            options.xhrFields = {
+                withCredentials: true
+            };
+        });
+
+        var proxiedSync = Backbone.sync;
+        Backbone.sync = function(method, model, options) {
+            options || (options = {});
+
+            if (!options.crossDomain) {
+                options.crossDomain = true;
+            }
+
+            if (!options.xhrFields) {
+                options.xhrFields = {withCredentials:true};
+            }
+
+            return proxiedSync(method, model, options);
+        };
 
         var Users = Backbone.Collection.extend({
             url:'/users'
@@ -103,20 +127,33 @@
 
         var UserEditView = Backbone.View.extend({
             el:'.page',
-            render:function(){
-                var user = new User();
+            events:{
+              'submit .edit-user-form':'saveUser'
+            },
+            render:function(options){
                 var that = this;
-                user.fetch({
+                this.user = new User({id:options.id});
+                this.user.fetch({
                     success:function(user){
-                        var template = _.template($('#eidt-user-template').html(), {user:user});
+                        var template = _.template($('#edit-user-template').html(), {user:user});
                         that.$el.html(template);
                     }
                 })
+            },
+            saveUser:function(ev){
+                var userDetails = $(ev.currentTarget).serializeObject();
+                var user = new User();
+                user.save(userDetails, {
+                    success:function(user){
+                        router.navigate('', {trigger:true});
+                    }
+                })
+                return false;
             }
         })
         var userEditView = new UserEditView();
 
-   
+
         var Router = Backbone.Router.extend({
             routes:{
                 "":'home',
@@ -128,8 +165,8 @@
         router.on('route:home', function(){
             userListView.render();
         })
-        router.on('route:edit', function(){
-            userEditView.render();
+        router.on('route:edit', function(id){
+            userEditView.render({id:id});
         })
 
         Backbone.history.start();
