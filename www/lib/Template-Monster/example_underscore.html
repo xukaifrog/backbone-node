@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Template monster</title>
+</head>
+
+<body>
+<p id="on_page">load a template from the source...</p>
+<p id="main">This is my body, if everything works this should be replaced.</p>
+<p id="load"></p>
+<p id="load_again"></p>
+
+<script type="text/template" id="template_on_page">
+	<p>This is an example of an <%=template_engine%> template. You can (and should) still include some templates directly on the page but only if they're going to be used immediately. All others you should load in.</p>
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!--<script src="http://zeptojs.com/zepto.min.js"></script>-->
+<script src="https://raw.github.com/documentcloud/underscore/master/underscore-min.js"></script>
+<script src="template-monster.js"></script>
+<script>
+
+/* On page templates still work just fine */
+var template = _.template($('#template_on_page').html());
+$('#on_page').html(template({'template_engine': 'underscore on page'}));
+
+/* Initial template load */
+templateMonster.loadTemplates([
+	{name: 'test1', filename: 'template1.html'}
+]);
+
+/* Lets use test1 now that it's loaded */
+/* There is a race condition here and this probably wont exist here
+  but if it were on an action (button) it might. We probably need a better 
+  way to handle this */
+var template1 = templateMonster.getTemplate('test1');
+if (template1){
+  template = _.template(template1);
+  $('#main').html(template({'template_engine': 'underscore'}));
+}
+
+/* Custom callback and loading on the fly.
+  Load a template and render it when we get it back */
+templateMonster.loadTemplate({
+  name:'test2', 
+  filename:'template2.html', 
+  callback:function(template){
+    var compiled = _.template(template['data']);
+    $('#load').html(compiled({'template_engine': 'underscore'}));
+  }
+});
+/* Templates are cached and in local storage, notice no server call 
+   even though we're loading the same template */
+templateMonster.loadTemplate({
+  name:'test2', 
+  filename:'template2.html', 
+  callback:function(template){
+    var compiled = _.template(template['data']);
+    $('#load_again').html(compiled({'template_engine': 'underscore'}));
+  }
+});
+
+</script>
+
+
+</body>
+</html>

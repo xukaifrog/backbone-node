@@ -1,0 +1,22 @@
+<a href="#/new" class="btn btn-primary">New</a>
+<hr />
+<table class="table striped">
+    <thead>
+        <tr>
+            <th>first name</th>
+            <th>last name</th>
+            <th>age</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% _.each(users, function(user){ %>
+            <tr>
+            <td><%= escape(user.get('firstname')) %> </td>
+            <td><%= escape(user.get('lastname')) %> </td>
+            <td><%= escape(user.get('age')) %> </td>
+            <td><a href="#/edit/<%= user.get('id') %>" class="btn">Edit</a></td>
+            </tr>
+        <% }); %>
+    </tbody>
+    </table>
