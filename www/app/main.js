@@ -1,12 +1,12 @@
 define([
-    'app/gdeps',
+    'app/libs',
     'app/router',
     'app/view/userListView',
     'app/view/userEditView'
-], function(Gdeps, Router, UserListView, UserEditView){
+], function(Libs, Router, UserListView, UserEditView){
     var router = new Router();
     var userListView = new UserListView();
-    var userEditView = new UserEditView();
+    var userEditView = new UserEditView({router:router});
 
     router.on('route:home', function(){
         userListView.render();

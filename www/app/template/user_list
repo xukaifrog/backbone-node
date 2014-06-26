@@ -1,22 +1,16 @@
-<a href="#/new" class="btn btn-primary">New</a>
-<hr />
-<table class="table striped">
-    <thead>
-        <tr>
-            <th>first name</th>
-            <th>last name</th>
-            <th>age</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+
+<div title='Welcome' id="main" class="panel" selected="true" data-tab="navbar_home">
+    <h2 class='expanded' onclick='showHide(this,"main_info");'>Welcome</h2>
+    <a href="#/new" class="button">New</a>
+    <p id='main_info'>Here are all users, you could add, delete and create.</p>
+    <ul class="list">
+        <li class='red'>
+            <a href="#af" id='aflink' class='icon home big'>App Framework</a>
+        </li>
         <% _.each(users, function(user){ %>
-            <tr>
-            <td><%= escape(user.get('firstname')) %> </td>
-            <td><%= escape(user.get('lastname')) %> </td>
-            <td><%= escape(user.get('age')) %> </td>
-            <td><a href="#/edit/<%= user.get('id') %>" class="btn">Edit</a></td>
-            </tr>
-        <% }); %>
-    </tbody>
-    </table>
+        <li class="blue">
+            <a href="#/edit/<%= user.get('id') %>"><%= escape(user.get('firstname')) %> </a>
+        </li>
+         <% }); %>
+    </ul>
+</div>

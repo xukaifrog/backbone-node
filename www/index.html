@@ -1,16 +1,73 @@
+
 <!DOCTYPE html>
+<!--HTML5 doctype-->
 <html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>hello world</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script data-main="app" src="lib/require.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <h1>User manager</h1>
-            <hr />
-            <div class="page"></div>
-        </div>
-    </body>
+<head>
+    <title>App Framework Kitchen Sink</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="lib/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="lib/css/af.ui.css" title="default" />
+    <link rel="stylesheet" type="text/css" href="lib/css/ios.css"  />
+    <!-- uncomment for intel.xdk apps
+    <script type="text/javascript" charset="utf-8" src="intelxdk.js"></script>
+    <script type="text/javascript" charset="utf-8" src="xhr.js"></script>
+    -->
+    <script data-main="app" src="lib/require.js"></script>
+</head>
+<body>
+<div id="afui" class="ios">
+<!-- this is the splashscreen you see.-->
+<div id="splashscreen" class='ui-loader heavy'>
+    App Framework
+    <br>
+    <br>    <span class='ui-icon ui-icon-loading spin'></span>
+    <h1>Starting app</h1>
+</div>
+
+<div id="header">
+    <a href="javascript:$.ui.toggleLeftSideMenu()" class="menuButton" style="float:right"></a>
+</div>
+<div id="content">
+</div>
+<!-- ------------------------------------------ -->
+<!-- navbar -->
+
+<div id="navbar">
+    <a href="#main/1/3" id='navbar_home' class='icon home'>home <span class='af-badge lr'>3</span></a>
+    <a href="#af" id='navbar_js' class="icon target">selectors</a>
+    <a href="#afuidemo" id='navbar_ui' class="icon picture">ui</a>
+    <a href="#afweb" id='navbar_plugins' class="icon key">plugins</a>
+</div>
+<!-- ------------------------------------------ -->
+<nav>
+    <ul class="list">
+        <li class="icon home divider">Home</li>
+        <li><a href="#af">Selectors</a></li>
+
+        <li class="divider">UI</li>
+        <li><a href="#aftransitions">Transitions</a></li>
+        <li><a href="#afuidemo">UI Elements</a></li>
+        <li><a href="#uiapi">APIs</a></li>
+
+        <li class="divider">Plugins</li>
+        <li> <a href="#webslider">Scroller</a></li>
+        <li><a href="#webanimate">CSS3 animation</a></li>
+        <li><a href="#webactionsheet">Action sheet</a> </li>
+
+        <li class="divider">Menus</li>
+        <li><a  onclick="$.ui.toggleHeaderMenu();">Toggle Header</a></li>
+        <li><a  onclick="$.ui.toggleSideMenu()">Toggle Side</a></li>
+        <li><a  onclick="$.ui.toggleNavMenu()">Toggle Footer</a></li>
+    </ul>
+</nav>
+<aside>
+    This is a chat aside
+</aside>
+</div>
+
+</body>
 </html>

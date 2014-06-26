@@ -2,14 +2,17 @@
  * Created by kai on 6/24/14.
  */
 define([
-    'app/gdeps',
+    'app/libs',
     'app/router',
     'app/model/user',
     'text!../template/user_edit' // Template
 ], function(gdeps, Router, User, Template) {
     var UserEditView = Backbone.View.extend({
-        router:new Router(),
         el:'.page',
+        initialize: function(options) {
+            // Deal with default options and then look at options.pos
+            this.router = options.router;
+        },
         events:{
             'submit .edit-user-form':'saveUser',
             'click .delete':'deleteUser'

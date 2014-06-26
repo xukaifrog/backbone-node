@@ -3,9 +3,9 @@
  */
 define([
 // add global app dependency
-    'app/gdeps' // App
+    'app/libs' // App
 // additional module dependencies
-], function(gdeps){
+], function(){
     var Router = Backbone.Router.extend({
         routes:{
             "":'home',
