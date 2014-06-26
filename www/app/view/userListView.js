@@ -7,7 +7,7 @@ define([
     'text!../template/user_list' // Template
     ], function(gdeps, Users, Template){
     var UserListView = Backbone.View.extend({
-        el:'#content',
+        el:'#main',
         render:function(){
             var users = new Users();
             var that = this;
@@ -15,9 +15,11 @@ define([
                 success:function(users){
                     var template = _.template(Template, {users:users.models});
                     that.$el.html(template);
+                    //$.ui.loadContent('#main', true, false, false);
                 }
             })
         }
     })
+
     return UserListView;
 });

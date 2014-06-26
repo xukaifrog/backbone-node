@@ -10,8 +10,7 @@ define([
         routes:{
             "":'home',
             "edit/:id":'edit',
-            "new":'edit',
-            "test":'alert2'
+            "new":'edit'
         }
 })
 // what we return here will be used by other modules

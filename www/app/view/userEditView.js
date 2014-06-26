@@ -8,29 +8,29 @@ define([
     'text!../template/user_edit' // Template
 ], function(gdeps, Router, User, Template) {
     var UserEditView = Backbone.View.extend({
-        el:'.page',
+        el:'#content',
         initialize: function(options) {
             // Deal with default options and then look at options.pos
             this.router = options.router;
         },
         events:{
-            'submit .edit-user-form':'saveUser',
+            'submit #user_info form':'saveUser',
             'click .delete':'deleteUser'
         },
         render:function(options){
-            var that = this;
             if (options.id) {
                 this.user = new User({id:options.id});
                 this.user.fetch({
                     success:function(user){
                         var template = _.template(Template, {user:user});
-                        that.$el.html(template);
                     }
                 })
             } else {
                 var user = new User();
                 var template = _.template(Template, {user:user});
-                that.$el.html(template);
+                $.ui.addContentDiv('user_info', template, 'Add user');
+                this.$el.append($('#user_info'));
+                $.ui.loadContent('#user_info', false, false, 'pop');
             }
         },
         deleteUser:function(ev){

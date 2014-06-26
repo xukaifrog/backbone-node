@@ -1,18 +1,15 @@
-<form class='edit-user-form'>
-    <legend>Edit user </legend>
-    <label> First Name </label>
-    <input type='text' value='<%= user.get('firstname') %>' name='firstname'>
-    <label> Last Name </label>
-    <input name='lastname' type='text' value='<%= user.get('lastname') %>'>
-    <label> age </label>
-    <input type='text' name='age' value='<%= user.get('age') %>'>
+<form>
+    <div class="formGroupHead">Enter your info</div>
+    <input type='text' placeholder='First Name' value='<%= user.get('firstname') %>' name='firstname'>
+    <input name='lastname' placeholder='Last Name' type='text' value='<%= user.get('lastname') %>'>
+    <input type='text' placeholder='Age' name='age' value='<%= user.get('age') %>'>
 
     <hr />
     <% if (user.id){ %>
-    <button type='submit' class='btn btn-primary'>edit</button>
-    <button type="button" class="btn btn-danger delete">delete</button>
+    <button type='submit' class='button'>edit</button>
+    <button type="button" class="button">delete</button>
     <input type='hidden' name="id" value="<%= user.id %>">
     <% } else { %>
-    <button type='submit' class='btn-primary'>new</button>
+    <button type='submit' class='button blue'>new</button>
     <% }; %>
 </form>

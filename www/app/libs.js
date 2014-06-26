@@ -62,12 +62,14 @@ define([
     $.ui.splitview=false;
     //To disable the default routing of App Framework, simply set
     $.ui.useInternalRouting = false;
+    //Override the back button text
+    $.ui.backButtonText="Back"
 
-    /* This code is used to run as soon as intel.xdk activates */
+    // This code is used to run as soon as intel.xdk activates
     var onDeviceReady = function () {
         intel.xdk.device.setRotateOrientation("portrait");
         intel.xdk.device.setAutoRotate(false);
-        webRoot = intel.xdk.webRoot + "";
+        //webRoot = intel.xdk.webRoot + "";
         //hide splash screen
         intel.xdk.device.hideSplashScreen();
         $.ui.blockPageScroll(); //block the page from scrolling at the header/footer
@@ -77,7 +79,11 @@ define([
         //This function will get executed when $.ui.launch has completed
     });
 
-    $.ui.launch();
+     $(document).ready(function(){
+        $.ui.launch();
+    });
+
+
 // PRIVATE FUNCTIONS
 
 // what we return here will be used by other modules
