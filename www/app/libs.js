@@ -48,6 +48,9 @@ define([
             withCredentials: true
         };
     });
+    $(document).ajaxSend(function (event, request, settings) {
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    });
 
     //Touche event when it is browser
     if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
@@ -61,7 +64,7 @@ define([
     $.ui.openLinksNewTab = false;
     $.ui.splitview=false;
     //To disable the default routing of App Framework, simply set
-    $.ui.useInternalRouting = false;
+    //$.ui.useInternalRouting = false;
     //Override the back button text
     $.ui.backButtonText="Back"
 

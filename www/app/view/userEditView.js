@@ -46,11 +46,14 @@ define([
             var that = this;
             var userDetails = $(ev.currentTarget).serializeObject();
             var user = new User();
+            console.log('user.save.in');
             user.save(userDetails, {
                 success:function(user){
-                    that.router.navigate('', {trigger:true});
+                    console.log('user.save.success');
+                   // that.router.navigate('', {trigger:true});
                 }
             })
+            console.log('user.save.out');
             return false;
         }
     })

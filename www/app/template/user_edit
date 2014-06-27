@@ -1,7 +1,7 @@
 <form>
     <div class="formGroupHead">Enter your info</div>
-    <input type='text' placeholder='First Name' value='<%= user.get('firstname') %>' name='firstname'>
-    <input name='lastname' placeholder='Last Name' type='text' value='<%= user.get('lastname') %>'>
+    <input type='text' placeholder='First Name' name='firstname' value='<%= user.get('firstname') %>'>
+    <input type='text' placeholder='Last Name' name='lastname' value='<%= user.get('lastname') %>'>
     <input type='text' placeholder='Age' name='age' value='<%= user.get('age') %>'>
 
     <hr />
